@@ -22,6 +22,15 @@ public class User {
 
     }
 
+    @Override
+    public String toString() {
+        return "Пользователь с " +
+                "id " + id +
+                ": Имя - " + name +
+                ", Фамилия - " + lastName +
+                ", Возраст - " + age;
+    }
+
     public User(String name, String lastName, Byte age) {
         this.name = name;
         this.lastName = lastName;
