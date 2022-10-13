@@ -13,7 +13,7 @@ import java.util.List;
 public class UserDaoHibernateImpl implements UserDao {
     private Util util = new Util();
     private Session session;
-    Transaction transaction;
+    private Transaction transaction;
 
     public UserDaoHibernateImpl() {
 
@@ -31,6 +31,7 @@ public class UserDaoHibernateImpl implements UserDao {
                     "  `lastname` VARCHAR(45) NOT NULL,\n" +
                     "  `age` INT NOT NULL,\n" +
                     "  PRIMARY KEY (`id`));").executeUpdate();
+            session.close();
             System.out.println("Таблица успешно создана");
         } catch (Exception e) {
             System.err.println("Возникла ошибка при создании таблицы пользователей");
@@ -43,10 +44,10 @@ public class UserDaoHibernateImpl implements UserDao {
             session = util.createHibernateConnection();
             session.beginTransaction();
             session.createSQLQuery("DROP TABLE IF EXISTS users").executeUpdate();
+            session.close();
             System.out.println("Таблица очищена");
         } catch (Exception e) {
             System.err.println("Возникла ошибка при удалении таблицы пользователей");
-            e.printStackTrace();
         }
     }
 
