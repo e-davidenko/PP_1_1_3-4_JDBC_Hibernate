@@ -13,7 +13,6 @@ public class Util {
     private static final String URL = "jdbc:mysql://localhost:3306/schema";
     private static final String USERNAME = "root";
     private static final String PASSWORD = "root";
-    private Session session;
 
     public Connection createNewConnection() {
         Connection connection;
@@ -33,7 +32,7 @@ public class Util {
         return connection;
     }
 
-    public Session createHibernateConnection() {
+    public SessionFactory createHibernateConnection() {
         try {
             Properties properties = new Properties();
             properties.setProperty("hibernate.connection.url", URL);
@@ -44,8 +43,7 @@ public class Util {
             properties.setProperty("show_sql", "true");
             properties.setProperty("current_session_context_class", "thread");
             SessionFactory sessionFactory = new Configuration().addProperties(properties).addAnnotatedClass(User.class).buildSessionFactory();
-            session = sessionFactory.openSession().getSession();
-            return session;
+            return sessionFactory;
         } catch (HibernateException e) {
             System.err.println("Ошибка при создании соединения с базой, проверьте каракули которые вы написали в properties");
             throw new RuntimeException();
