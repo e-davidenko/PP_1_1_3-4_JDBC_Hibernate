@@ -12,7 +12,6 @@ import java.util.List;
 public class UserDaoJDBCImpl implements UserDao {
     private Util util = new Util();
     private Connection connection = util.createNewConnection();
-    private List<User> list;
 
     public UserDaoJDBCImpl() {
 
@@ -74,7 +73,7 @@ public class UserDaoJDBCImpl implements UserDao {
     }
 
     public List<User> getAllUsers() {
-        list = new ArrayList<>();
+        List<User> list = new ArrayList<>();
         try {
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery("SELECT * FROM users;");
