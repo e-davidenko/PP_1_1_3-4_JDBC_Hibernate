@@ -26,6 +26,7 @@ public class UserDaoHibernateImpl implements UserDao {
                     "  `lastname` VARCHAR(45) NOT NULL,\n" +
                     "  `age` INT NOT NULL,\n" +
                     "  PRIMARY KEY (`id`));").executeUpdate();
+            session.getTransaction().commit();
             System.out.println("Таблица успешно создана");
         } catch (Exception e) {
             System.err.println("Возникла ошибка при создании таблицы пользователей");
@@ -102,7 +103,7 @@ public class UserDaoHibernateImpl implements UserDao {
         Session session = util.createHibernateConnection().openSession().getSession();
         try {
             session.beginTransaction();
-            session.createSQLQuery("TRUNCATE TABLE users").executeUpdate(); //просто потому что это 1 строка
+            session.createSQLQuery("TRUNCATE TABLE users").executeUpdate();
             session.close();
             System.out.println("Таблица успешно очищена");
         } catch (HibernateException e) {
