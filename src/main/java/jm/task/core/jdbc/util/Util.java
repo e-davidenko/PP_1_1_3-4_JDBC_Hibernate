@@ -43,6 +43,7 @@ public class Util {
             properties.setProperty("show_sql", "true");
             properties.setProperty("current_session_context_class", "thread");
             SessionFactory sessionFactory = new Configuration().addProperties(properties).addAnnotatedClass(User.class).buildSessionFactory();
+            assert sessionFactory != null;
             return sessionFactory;
         } catch (HibernateException e) {
             System.err.println("Ошибка при создании соединения с базой, проверьте каракули которые вы написали в properties");
