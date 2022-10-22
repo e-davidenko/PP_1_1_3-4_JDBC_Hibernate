@@ -14,23 +14,6 @@ public class Util {
     private static final String USERNAME = "root";
     private static final String PASSWORD = "root";
 
-    public Connection createNewConnection() {
-        Connection connection;
-        try {
-            Driver driver = new com.mysql.cj.jdbc.Driver();
-            DriverManager.registerDriver(driver);
-        } catch (SQLException e) {
-            System.err.println("Ошибка подключения к БД");
-        }
-
-        try {
-            connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        System.out.println("Соединение успешно установлено!");
-        return connection;
-    }
 
     public SessionFactory createHibernateConnection() {
         try {
@@ -43,11 +26,30 @@ public class Util {
             properties.setProperty("show_sql", "true");
             properties.setProperty("current_session_context_class", "thread");
             SessionFactory sessionFactory = new Configuration().addProperties(properties).addAnnotatedClass(User.class).buildSessionFactory();
-            assert sessionFactory != null;
-            return sessionFactory;
+            if (sessionFactory != null) {
+                return sessionFactory;
+            }
+            return null;
         } catch (HibernateException e) {
             System.err.println("Ошибка при создании соединения с базой, проверьте каракули которые вы написали в properties");
             throw new RuntimeException();
         }
     }
 }
+            /*  public Connection createNewConnection() {
+          Connection connection;
+          try {
+              Driver driver = new com.mysql.cj.jdbc.Driver();
+              DriverManager.registerDriver(driver);
+          } catch (SQLException e) {
+              System.err.println("Ошибка подключения к БД");
+          }
+
+          try {
+              connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+          } catch (SQLException e) {
+              throw new RuntimeException(e);
+          }
+          System.out.println("Соединение успешно установлено!");
+          return connection;
+      }*/
