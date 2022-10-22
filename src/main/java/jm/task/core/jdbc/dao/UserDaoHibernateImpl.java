@@ -116,8 +116,6 @@ public class UserDaoHibernateImpl implements UserDao {
             System.out.println("Таблица успешно очищена");
         } catch (HibernateException e) {
             System.err.println("Ошибка при очистке таблицы");
-            assert transaction != null;
-            transaction.rollback();
         }
     }
 }
